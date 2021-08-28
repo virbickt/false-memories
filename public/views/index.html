@@ -45,35 +45,35 @@
     var my_timeline = [];
 
     var quasi =  {
-      'Q1': 'to install human memories (QUASI)',
-      'Q2': 'other people’s YES',
-      'Q3': 'memories of other people (QUASI)',
+      'Q1': 'to install human memories',
+      'Q2': 'other people’s',
+      'Q3': 'memories of other people',
 
-      'Q4': 'other people’s (for Q and T) (QUASI)',
+      'Q4': 'other people’s',
       'Q5': '',
-      '6': 'the transferred (for Q and A) (QUASI)',
+      '6': 'the transferred',
     };
 
     var artificial =  {
-      'Q1': 'to create artificial memories and to install such memories (ARTIFICIAL)',
-      'Q2': 'artificial (ARTIFICIAL)',
-      'Q3': 'artificial memories (ARTIFICIAL)',
+      'Q1': 'to create artificial memories and to install such memories',
+      'Q2': 'artificial',
+      'Q3': 'artificial memories',
 
-      'Q4': 'artificial (ARTIFICIAL)',
+      'Q4': 'artificial',
       'Q5': '',
-      'Q6': 'the transferred (ARTIFICIAL)',
+      'Q6': 'the transferred',
     };
 
     var veridical = {
-      'Q1': 'to install human memories (VERIDICAL)',
-      'Q2': 'other people’s (VERIDICAL)',
-      'Q3': 'memories of other people (VERIDICAL)',
+      'Q1': 'to install human memories',
+      'Q2': 'other people’s',
+      'Q3': 'memories of other people',
 
-      "Q4": 'other people’s (VERIDICAL)',
+      "Q4": 'other people’s',
       "Q5": `[Not all his memories,
               however, are transferred memories of other people. Some of his memories
-              are from the period before memory transfer. (VERIDICAL)]`,
-      "Q6": 'such original (VERIDICAL)'
+              are from the period before memory transfer.]`,
+      "Q6": 'such original'
     }
 
     var p1_options = [quasi, artificial, veridical];
@@ -116,15 +116,13 @@
       technology that allows one ${p1_shuffled[0]['Q1']} into
       biological storage devices created for this purpose. This technology also
       allows one to transfer such memories into the brains of other people. A
-      person, into whose brain such ${p1_shuffled[0]['Q2']}[other people’s (for Q and T) / artificial (for
-      A)] memories are transferred, cannot distinguish such transferred memories
+      person, into whose brain such ${p1_shuffled[0]['Q2']} memories are transferred, cannot distinguish such transferred memories
       from their own memories. Also, no available technologies can distinguish
       such memories from others. This technology at the moment is experimental
       and secret, but it is already sometimes used as an educational tool, since it
       provides an easy way to transfer knowledge that was memorized by another
       person. It is also sometimes used as a means to improve psychological wellbeing
-      by transferring pleasant [memories of other people (for Q and T) /
-      artificial memories (for A)] ${p1_shuffled[0]['Q3']}
+      by transferring pleasant ${p1_shuffled[0]['Q3']}
     </p>
     `;
 
