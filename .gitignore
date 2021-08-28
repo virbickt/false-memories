@@ -1,0 +1,7 @@
+*.js
+*.aux
+*.bcf
+*.log
+*.run.xml
+*.synctex.gz
+*.tex
