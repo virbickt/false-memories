@@ -6,6 +6,7 @@
     <script src="./jspsych/jspsych.js"></script>
     <script src="./jspsych/plugins/jspsych-instructions.js"></script>
     <script src="./jspsych/plugins/jspsych-html-button-response.js"></script>
+    <script src="./jspsych/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="./jspsych/plugins/jspsych-survey-likert.js"></script>
     <link href="./jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
 
@@ -42,6 +43,7 @@
   </body>
   <script>
   var my_timeline = [];
+  var count = 0;
 
   var quasi = {
     Q1: 'to install human memories',
@@ -75,6 +77,7 @@
     Q6: 'such original',
   };
 
+  var yes_no_options = ["Yes", "No"];
   var p1_options = [quasi, artificial, veridical];
   var p1_shuffled = jsPsych.randomization.shuffle(p1_options);
 
@@ -106,6 +109,15 @@
     ],
     show_clickable_nav: true,
   };
+
+  var pre_if_trial = {
+    type: 'html-button-response',
+    stimulus: 'Do you enjoy science fiction?',
+    choices: yes_no_options,
+    on_finish: function(data){
+      scifi_response = yes_no_options[data.response];
+    }
+  }
 
   // STUDY NO 1: PART 1
   quasi_and_artificial_text_1 = `
@@ -158,6 +170,19 @@
     type: 'survey-likert',
     questions: [{ prompt: prompts[1], labels: scale_1 }],
   };
+
+  var if_node = {
+      timeline: [quasi_and_artificial, quasi_and_artificial_q1, quasi_and_artificial_q2],
+      conditional_function: function(){
+          // get the data from the previous trial,
+          // and check which key was pressed
+          if(scifi_response === 'Yes'){
+              return true;
+          } else {
+              return false;
+          }
+      }
+  }
 
   // STUDY 2
   var half_year = 'six months';
@@ -280,18 +305,24 @@
     randomize_question_order: true,
   };
 
-  my_timeline.push(welcome);
-  my_timeline.push(quasi_and_artificial);
-  my_timeline.push(quasi_and_artificial_q1);
-  my_timeline.push(quasi_and_artificial_q2);
-  my_timeline.push(elaborate_on_qa);
-  my_timeline.push(dream_memories);
-  my_timeline.push(dream_memories_q1);
-  my_timeline.push(elaborate_on_dm);
-  my_timeline.push(fakes);
+  // my_timeline.push(welcome);
+  // my_timeline.push(pre_if_trial);
+  // my_timeline.push(if_node);
+  // my_timeline.push(dream_memories);
+  // my_timeline.push(dream_memories_q1);
+  // my_timeline.push(elaborate_on_dm);
+  // my_timeline.push(fakes);
 
   jsPsych.init({
-    timeline: my_timeline,
+    timeline: [welcome, pre_if_trial, if_node, dream_memories, dream_memories_q1, elaborate_on_dm, fakes],
+    show_progress_bar: true,
+    message_progress_bar: 'Points earned',
+    // on_interaction_data_update: function(data) {
+    // console.log(JSON.stringify(data))
+    // if (data["event"] === "blur") {
+    //   count++;
+    // }
+  // }
   });
 
   </script>
