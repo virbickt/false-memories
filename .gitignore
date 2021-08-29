@@ -4,3 +4,7 @@
 *.run.xml
 *.synctex.gz
 *.tex
+*.env
+*.node_modules/
+*.node_modules
+node_modules
