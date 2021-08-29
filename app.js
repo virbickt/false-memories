@@ -29,6 +29,6 @@ app.get('/', function(request, response){
       // render the experiment script, along with some data (here, just the trial_id);
       response.render('index.html')
     } else {
-      response.send('<div style="border: 1px solid transparent">test</div>');
+      response.send('<div class="jspsych-content">Please try again</div>');
     }
 });
