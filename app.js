@@ -29,6 +29,6 @@ app.get('/', function(request, response){
       // render the experiment script, along with some data (here, just the trial_id);
       response.render('index.html')
     } else {
-      response('<div style='border: 1px solid transparent;'>You seem to be viewing this on a mobile device. Using a mobile device has been seen to cause unexpected errors. Please try again using a computer.</div>');
+      response.send('<div style='border: 1px solid transparent;'>You seem to be viewing this on a mobile device. Using a mobile device has been seen to cause unexpected errors. Please try again using a computer.</div>');
     }
 });
