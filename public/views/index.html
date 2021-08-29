@@ -39,7 +39,6 @@
 
 
   <body>
-
   </body>
   <script>
   var my_timeline = [];
@@ -156,27 +155,32 @@
     show_clickable_nav: true,
   };
 
+  // timeline variable
   prompts = [
     'Do you agree that Albertas <b>remembers</b> that he has tasted rowan-berries when he was a child?',
     'Do you agree that Albertas <b>knows</b> that he has tasted rowan-berries when he was a child?',
   ];
 
-  var quasi_and_artificial_q1 = {
-    type: 'survey-likert',
-    questions: [{ prompt: prompts[0], labels: scale_1 }],
-  };
-
-  var quasi_and_artificial_q2 = {
-    type: 'survey-likert',
-    questions: [{ prompt: prompts[1], labels: scale_1 }],
-  };
+  var quasi_and_artificial_questions = {
+    timeline: [
+        {
+            type: 'survey-likert',
+            questions: [{ prompt: jsPsych.timelineVariable('prompt'), labels: scale_1 }]
+        }
+    ],
+    timeline_variables: [
+        { prompt: 'Do you agree that Albertas <b>remembers</b> that he has tasted rowan-berries when he was a child?' },
+        { prompt: 'Do you agree that Albertas <b>knows</b> that he has tasted rowan-berries when he was a child?' }
+    ],
+    randomize_order: true
+  }
 
   var if_node = {
-      timeline: [quasi_and_artificial, quasi_and_artificial_q1, quasi_and_artificial_q2],
+      timeline: [quasi_and_artificial, quasi_and_artificial_questions],
       conditional_function: function(){
           // get the data from the previous trial,
           // and check which key was pressed
-          if(scifi_response === 'Yes'){
+          if(scifi_response === "Yes"){
               return true;
           } else {
               return false;
@@ -317,12 +321,12 @@
     timeline: [welcome, pre_if_trial, if_node, dream_memories, dream_memories_q1, elaborate_on_dm, fakes],
     show_progress_bar: true,
     message_progress_bar: 'Points earned',
-    // on_interaction_data_update: function(data) {
-    // console.log(JSON.stringify(data))
-    // if (data["event"] === "blur") {
-    //   count++;
-    // }
-  // }
+    on_interaction_data_update: function(data) {
+    console.log(JSON.stringify(data))
+    if (data["event"] === "blur") {
+      count++;
+    }
+  }
   });
 
   </script>
