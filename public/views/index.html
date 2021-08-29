@@ -105,18 +105,41 @@
     type: 'instructions',
     pages: [
       'Welcome to the experiment, based on 2020 paper by V.Dranseika named "False memories and quasi-memories are memories."',
-      'We are going to give you some scenarios to read, and ask your opinions on them.',
+      'We are going to give you some scenarios to read, and ask your opinions on them. Points will be rewarded for the completion of each of the scenario that will be presented to you. Complete all scenarios to collect the maximum number of points.',
     ],
     show_clickable_nav: true,
+    on_finish: function(){
+        jsPsych.setProgressBar(0.00);
+    }
   };
 
   var pre_if_trial = {
     type: 'html-button-response',
-    stimulus: 'Do you enjoy science fiction?',
+    stimulus: '<p>Before we begin, let\'s break the ice. Say, do you enjoy science fiction?</p>',
     choices: yes_no_options,
     on_finish: function(data){
       scifi_response = yes_no_options[data.response];
+      jsPsych.setProgressBar(0.00);
     }
+  }
+
+  var pre_then = {
+    type: 'instructions',
+    pages: ['In that case, please consider the following scenario.'],
+    show_clickable_nav: true,
+  }
+
+  var if_node_2 = {
+      timeline: [pre_then],
+      conditional_function: function(){
+          // get the data from the previous trial,
+          // and check which key was pressed
+          if(scifi_response === "No" || scifi_response === "Yes"){
+              return true;
+          } else {
+              return false;
+          }
+      }
   }
 
   // STUDY NO 1: PART 1
@@ -175,6 +198,7 @@
     ],
     randomize_order: true,
     on_finish: function(){
+        jsPsych.setProgressBar(0.22);
         proportion_complete = jsPsych.getProgressBarCompleted();
   }};
 
@@ -186,11 +210,30 @@
   };
 
   var if_node = {
-      timeline: [quasi_and_artificial, quasi_and_artificial_questions, milestone_2],
+      timeline: [if_node_2, quasi_and_artificial, quasi_and_artificial_questions, milestone_2],
       conditional_function: function(){
           // get the data from the previous trial,
           // and check which key was pressed
           if(scifi_response === "Yes"){
+              return true;
+          } else {
+              return false;
+          }
+      }
+  }
+
+  var pre_then = {
+    type: 'instructions',
+    pages: ['In that case, please consider the following scenario.'],
+    show_clickable_nav: true,
+  }
+
+  var if_node_2 = {
+      timeline: [pre_then],
+      conditional_function: function(){
+          // get the data from the previous trial,
+          // and check which key was pressed
+          if(scifi_response === "No"){
               return true;
           } else {
               return false;
@@ -252,13 +295,16 @@
   var dream_memories_q1 = {
     type: 'survey-likert',
     questions: [{ prompt: dm_prompt, labels: scale_2 }],
+    on_finish: function(){
+        jsPsych.setProgressBar(0.80);
+    }
   };
 
   var milestone_1 = {
     type: 'instructions',
     pages: function(){
         if(scifi_response === "Yes"){
-          return ['Another ' + (jsPsych.getProgressBarCompleted().toFixed(2)*10000 - proportion_complete) + ' points!'];
+          return ['Another ' + (jsPsych.getProgressBarCompleted().toFixed(2)*10000 - proportion_complete.toFixed(2)*10000) + ' points! You now have ' + ((jsPsych.getProgressBarCompleted().toFixed(2)*10000 - proportion_complete.toFixed(2)*10000) + proportion_complete.toFixed(2)*10000) + ' points!'];
         } else {
           return ['Well done! You have now ' + jsPsych.getProgressBarCompleted().toFixed(2)*10000 + ' points! Click \'Next\' and proceed to the next study to collect more!'];
         }
@@ -340,8 +386,9 @@
   // my_timeline.push(fakes);
 
   jsPsych.init({
-    timeline: [welcome, pre_if_trial, if_node, dream_memories, dream_memories_q1, elaborate_on_dm, milestone_1, fakes],
+    timeline: [welcome, pre_if_trial, if_node, if_node_2, dream_memories, dream_memories_q1, elaborate_on_dm, milestone_1, fakes],
     show_progress_bar: true,
+    auto_update_progress_bar: false,
     message_progress_bar: 'Points earned',
     on_interaction_data_update: function(data) {
     console.log(JSON.stringify(data))
