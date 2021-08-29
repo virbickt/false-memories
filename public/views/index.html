@@ -43,6 +43,7 @@
   <script>
   var my_timeline = [];
   var count = 0;
+  var proportion_complete;
 
   var quasi = {
     Q1: 'to install human memories',
@@ -172,11 +173,20 @@
         { prompt: 'Do you agree that Albertas <b>remembers</b> that he has tasted rowan-berries when he was a child?' },
         { prompt: 'Do you agree that Albertas <b>knows</b> that he has tasted rowan-berries when he was a child?' }
     ],
-    randomize_order: true
-  }
+    randomize_order: true,
+    on_finish: function(){
+        proportion_complete = jsPsych.getProgressBarCompleted();
+  }};
+
+  var milestone_2 = {
+    type: 'instructions',
+    pages: function(){
+      return ['Well done! You have now ' + proportion_complete.toFixed(2)*10000 + ' points! Click \'Next\' and proceed to the next study to collect more!']},
+    show_clickable_nav: true
+  };
 
   var if_node = {
-      timeline: [quasi_and_artificial, quasi_and_artificial_questions],
+      timeline: [quasi_and_artificial, quasi_and_artificial_questions, milestone_2],
       conditional_function: function(){
           // get the data from the previous trial,
           // and check which key was pressed
@@ -242,6 +252,18 @@
   var dream_memories_q1 = {
     type: 'survey-likert',
     questions: [{ prompt: dm_prompt, labels: scale_2 }],
+  };
+
+  var milestone_1 = {
+    type: 'instructions',
+    pages: function(){
+        if(scifi_response === "Yes"){
+          return ['Another ' + (jsPsych.getProgressBarCompleted().toFixed(2)*10000 - proportion_complete) + ' points!'];
+        } else {
+          return ['Well done! You have now ' + jsPsych.getProgressBarCompleted().toFixed(2)*10000 + ' points! Click \'Next\' and proceed to the next study to collect more!'];
+        }
+      },
+      show_clickable_nav: true
   };
 
   var descriptions = [
@@ -318,7 +340,7 @@
   // my_timeline.push(fakes);
 
   jsPsych.init({
-    timeline: [welcome, pre_if_trial, if_node, dream_memories, dream_memories_q1, elaborate_on_dm, fakes],
+    timeline: [welcome, pre_if_trial, if_node, dream_memories, dream_memories_q1, elaborate_on_dm, milestone_1, fakes],
     show_progress_bar: true,
     message_progress_bar: 'Points earned',
     on_interaction_data_update: function(data) {
