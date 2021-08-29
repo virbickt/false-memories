@@ -377,6 +377,33 @@
     randomize_question_order: true,
   };
 
+  var falsities = {
+    timeline: [
+        {
+            type: 'survey-likert',
+            questions: [{ prompt: jsPsych.timelineVariable('prompt'), labels: scale_2 }]
+        }
+    ],
+    timeline_variables: [
+        { prompt: fakes_options_shuffled[0][0] },
+        { prompt: fakes_options_shuffled[0][1] },
+        { prompt: fakes_options_shuffled[0][2] },
+    ],
+    randomize_order: true,
+    on_finish: function(){
+        jsPsych.setProgressBar(1.00);
+        proportion_complete = jsPsych.getProgressBarCompleted();
+  }};
+
+
+  var conclude_survey = {
+    type: 'instructions',
+    pages: function(){
+          return ['Congratulations! You have collected '+((jsPsych.getProgressBarCompleted().toFixed(2)*10000 - proportion_complete.toFixed(2)*10000) + proportion_complete.toFixed(2)*10000)
++' of points in total and finished the survey. Thank you for the participation!'];
+      }
+    };
+
   // my_timeline.push(welcome);
   // my_timeline.push(pre_if_trial);
   // my_timeline.push(if_node);
@@ -386,7 +413,7 @@
   // my_timeline.push(fakes);
 
   jsPsych.init({
-    timeline: [welcome, pre_if_trial, if_node, if_node_2, dream_memories, dream_memories_q1, elaborate_on_dm, milestone_1, fakes],
+    timeline: [welcome, pre_if_trial, if_node, if_node_2, dream_memories, dream_memories_q1, elaborate_on_dm, milestone_1, falsities, conclude_survey],
     show_progress_bar: true,
     auto_update_progress_bar: false,
     message_progress_bar: 'Points earned',
