@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>False memories and quasi-memories are memories</title>
+    <!-- I will be making use of a couple of custom functions that I placed inside helper.js alongside other helper functions-->
+    <script src="../../libraries/helper.js"></script>
     <!-- Load the base jspsych script and the jspsych-based plugins -->
     <script src="../../jspsych/jspsych.js"></script>
     <script src="../../jspsych/plugins/jspsych-instructions.js"></script>
@@ -56,14 +58,6 @@ var pre_then = {
   var scale_2 = numberRange(1, 8);
 
   var yes_no_options = ["Yes", "No"];
-
-  function numberRange(start, end) {
-    return new Array(end - start).fill().map((d, i) => i + start);
-  }
-
-  function capitalize(str) {
-    return str[0].toUpperCase() + str.substring(1);
-  }
 
 /* Part 2: The scenario-specific placeholders to plug in to the vignette template are initialized */
   var quasi = {

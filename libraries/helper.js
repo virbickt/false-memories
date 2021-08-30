@@ -81,3 +81,13 @@ if (typeof exports !== 'undefined') {
 } else {
   window.helper = helper;
 }
+
+// Generates a sequence of numbers that could be used as the value for the likert-type scale in the script
+function numberRange(start, end) {
+  return new Array(end - start).fill().map((d, i) => i + start);
+}
+
+// Capitalize the first letter of the sentence
+function capitalize(str) {
+  return str[0].toUpperCase() + str.substring(1);
+}
