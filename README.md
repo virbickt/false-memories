@@ -6,7 +6,7 @@ This is a script for an online experiment based on (Dranseika, 2020) prepared as
     - the trial(s) for Study 1 ("Quasi-memories and artificial memories")
     - the trial(s) for Study 2 ("Dream memories")
     - the trials for Study 4 ("Memories, money, and guns")
-2. The special page that is returned for the participant if he is using a mobile device (`public/views/mobile.html`)
+2. The special page that is returned to the participant if he is using a mobile device (`public/views/mobile.html`)
 3. Server script that runs the experiment (`app.js`)
 4. Database to store the data collected (`controllers/db.js`)
 5. Helper functions used thorough the project (`controllers/task.js`,`controllers/response.js`, `models/helper.js`) 
