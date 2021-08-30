@@ -139,13 +139,13 @@ var pre_then = {
 
   quasi_and_artificial_text_2 = `
       <p>
-        Imagine that Albertas is a teenager who had a lot of ${p1_shuffled[0]['Q4']}
+        Imagine that Albert is a teenager who had a lot of ${p1_shuffled[0]['Q4']}
         memories transferred into his brain in his
-        childhood. Albertas does not know and has no reason whatsoever to suspect
+        childhood. Albert does not know and has no reason whatsoever to suspect
         that such memory transfer was performed on him. ${p1_shuffled[0]['Q5']}
         One of ${p1_shuffled[0]['Q6']} memories is about tasting
-        rowan-berries in childhood. When someone asks Albertas whether he has
-        ever tasted rowan-berries, Albertas replies with confidence: “Yes, I clearly
+        rowan-berries in childhood. When someone asks Albert whether he has
+        ever tasted rowan-berries, Albert replies with confidence: “Yes, I clearly
         remember eating rowan-berries when I was a child.”
       </p>
       `;
@@ -161,8 +161,8 @@ var pre_then = {
   Here the progress bar gets updated for the first time in the survey if the participant responded with "Yes" to "Like science fiction question?".
   */
   prompts = [
-    'Do you agree that Albertas <b>remembers</b> that he has tasted rowan-berries when he was a child?',
-    'Do you agree that Albertas <b>knows</b> that he has tasted rowan-berries when he was a child?',
+    'Do you agree that Albert <b>remembers</b> that he has tasted rowan-berries when he was a child?',
+    'Do you agree that Albert <b>knows</b> that he has tasted rowan-berries when he was a child?',
   ];
 
   var quasi_and_artificial_questions = {
@@ -173,8 +173,8 @@ var pre_then = {
         }
     ],
     timeline_variables: [
-        { prompt: 'Do you agree that Albertas <b>remembers</b> that he has tasted rowan-berries when he was a child?' },
-        { prompt: 'Do you agree that Albertas <b>knows</b> that he has tasted rowan-berries when he was a child?' }
+        { prompt: 'Do you agree that Albert <b>remembers</b> that he has tasted rowan-berries when he was a child?' },
+        { prompt: 'Do you agree that Albert <b>knows</b> that he has tasted rowan-berries when he was a child?' }
     ],
     randomize_order: true,
     on_finish: function(){
@@ -226,28 +226,28 @@ var pre_then = {
   /*Part 2: The vignettes which are to be filled by scenario-specific placeholders are initialized. Just like in the first study, vignettes sit inside a single trial while the text for each vignette is declared separately and is then placed inside a list that is set as the value of pages parameter.*/
   dream_memories_text_1 = `
       <p>
-        ${capitalize(p2_scenarios_shuffled[0])} Ona was attending Algis’ twentieth
+        ${capitalize(p2_scenarios_shuffled[0])} Ona was attending Algernon’s twentieth
         birthday party. Thinking of that party, Ona has a vivid image in her mind of Regina
-        inadvertently spilling red wine all over Jonas, followed by an image of Regina’s
-        horrified expression at the mishap, and of Jonas sitting on the grass by the drinks
+        inadvertently spilling red wine all over John, followed by an image of Regina’s
+        horrified expression at the mishap, and of John sitting on the grass by the drinks
         table, completely drenched.
       </p>
       `;
 
   dream_memories_text_2 = `
       <p>
-        However, no such event in fact occurred during Algis’ birthday party. Instead, what
-        happened was just that Ona, very excited about the party, on the same night had a
-        dream of Jonas having wine spilled all over him, and she came to believe that this
+        However, no such event in fact occurred during Algernon’s birthday party. Instead, what
+        happened was just that Ann, very excited about the party, on the same night had a
+        dream of John having wine spilled all over him, and she came to believe that this
         event occurred, not in her dream, but in reality.
       </p>
       `;
 
   dream_memories_text_3 = `
       <p>
-        When today a friend asked Ona whether she attended Algis’ twentieth birthday party
-        ${p2_scenarios_shuffled[0]}, Ona replied: “Yes, I attended Algis’
-        twentieth birthday party. Jonas was also there. I remember him having wine spilled all
+        When today a friend asked Ann whether she attended Algernon’s twentieth birthday party
+        ${p2_scenarios_shuffled[0]}, Ann replied: “Yes, I attended Algernon’s
+        twentieth birthday party. John was also there. I remember him having wine spilled all
         over him.”
       </p>
       `;
@@ -259,7 +259,7 @@ var pre_then = {
   };
 
 /*Part 3. Likert scale is used to have the participant is asked to express his agreement with the given claim that is based on the vignettes presented in the previous trial.*/
-  var dm_prompt = `How much do you agree with the claim "Ona has a memory of Jonas having wine spilled all over him during a party"`;
+  var dm_prompt = `How much do you agree with the claim "Ann has a memory of John having wine spilled all over him during a party"`;
 
   var dream_memories_q1 = {
     type: 'survey-likert',
@@ -285,16 +285,16 @@ var pre_then = {
 
   // Study 3: The following trials implement the idea to allow the participant to indicate his agreement with one of the given claims. That is meant to supplement the judgmenet the participant delivered on first and second studies. Given the length, the claims are again declared separately to be lated used inside a list.
   options_qa = [
-    `Even though Albertas hadn’t tasted rowan-berries when he was a child, he has a
+    `Even though Albert hadn’t tasted rowan-berries when he was a child, he has a
                        memory of tasting rowan-berries`,
-    `Albertas does not have a memory of tasting rowan-berries. He simply has an
+    `Albert does not have a memory of tasting rowan-berries. He simply has an
                        experience like the experience of someone who has such memory`,
   ];
 
   options_dm = [
-    `Ona has a memory of Jonas having wine spilled all over him during a party, even
+    `Ann has a memory of John having wine spilled all over him during a party, even
                        though no such event in fact happened`,
-    `Ona does not have a memory of Jonas having wine spilled all over him during a
+    `Ann does not have a memory of John having wine spilled all over him during a
                         party. She simply has an experience like the experience of someone who has a
                         memory of such event.`,
   ];
