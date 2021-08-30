@@ -1,5 +1,5 @@
 # false-memories
-This is a script for an online experiment based on (Dranseika, 2020) prepared as a final assignment for the course "Theory and practice in digital experiments: Doing X-Phi online" held at Ludwig-Maximilians-Universität München ...built using jsPsych and has been deployed using Heroku. The application running the script for the experiment can be accessed at https://false-memories.herokuapp.com/
+This is a script for an online experiment based on (Dranseika, 2020) prepared as a final assignment for the course "Theory and practice in digital experiments: Doing X-Phi online" held at Ludwig-Maximilians-Universität München. The experiment is based on jsPsych, a JavaScript library for running behavioral experiments in a web browser The application running (de Leeuw, 2015) the script for the experiment has been deployed using Heroku and can be accessed at https://false-memories.herokuapp.com/. 
 
 ## Contents
 1. The trial(s) for Study 1 ("Quasi-memories and artificial memories")
@@ -17,4 +17,5 @@ This is a script for an online experiment based on (Dranseika, 2020) prepared as
 - Timeline variables, which are used to repeat the trial with a varying value of a single parameter with all other parameters fixed are employed twice in the script. It is first used for the first study (Quasi-memories and artificial memories) where the trials for claims regarding remembering and knowing are presented by keeping fixed the type of the trial `survey-likert` and scale used. Second, it is used for the fourth study (Memories, money and guns) where the procedure consists in repeating the trial thrice for each of the prompts while type of trial `survey-likert` and the scale used is fixed. 
 
 ## References
+- de Leeuw, J. R. (2015). *jsPsych: A JavaScript library for creating behavioral experiments in a web browser*. Behavior Research Methods, 47(1), 1-12. doi:10.3758/s13428-014-0458-y
 - Dranseika, V. (2020). *False Memories and Quasi-Memories*. Oxford Studies in Experimental Philosophy Volume 3, 3, 175.
