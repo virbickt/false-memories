@@ -1,10 +1,10 @@
 # false-memories
-This is a script for an experiment based on (Dranseika, 2020) prepared as a final assignment for the course "Theory and practice in digital experiments: Doing X-Phi online" held at Ludwig-Maximilians-Universität München ...built using jsPsych and has been deployed using Heroku. The application running the script for the experiment can be accessed at https://false-memories.herokuapp.com/
+This is a script for an online experiment based on (Dranseika, 2020) prepared as a final assignment for the course "Theory and practice in digital experiments: Doing X-Phi online" held at Ludwig-Maximilians-Universität München ...built using jsPsych and has been deployed using Heroku. The application running the script for the experiment can be accessed at https://false-memories.herokuapp.com/
 
 ## Contents
-1. The trial(s) for Study 1 (Quasi-memories and artificial memories)
-2. The trial(s) for Study 2 (Dream memories)
-3. The trials for Study 4 (Memories, money, and guns)
+1. The trial(s) for Study 1 ("Quasi-memories and artificial memories")
+2. The trial(s) for Study 2 ("Dream memories")
+3. The trials for Study 4 ("Memories, money, and guns")
 
 ### Contingencies
 - The vignette presented to the participant is a result of plugging in scenario-based placeholders inside the vignette template. The scenario is selected randomly by `jsPsych.randomization.shuffle()`
