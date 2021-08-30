@@ -77,7 +77,9 @@ var pre_then = {
     'Strongly Agree',
   ];
 
-  var options_agree = ['A', 'B'];
+  var scale_2 = numberRange(1, 8);
+
+  var yes_no_options = ["Yes", "No"];
 
   function numberRange(start, end) {
     return new Array(end - start).fill().map((d, i) => i + start);
@@ -86,8 +88,6 @@ var pre_then = {
   function capitalize(str) {
     return str[0].toUpperCase() + str.substring(1);
   }
-
-  var scale_2 = numberRange(1, 8);
 
 /* Part 2: The scenario-specific placeholders to plug in to the vignette template are initialized */
   var quasi = {
@@ -146,6 +146,9 @@ var pre_then = {
           }
       }
   }
+
+  var p1_options = [quasi, artificial, veridical];
+  var p1_shuffled = jsPsych.randomization.shuffle(p1_options);
 
   /*Part 3: The vignettes which are to be filled by scenario-specific placeholders are initialized. The vignettes are presented inside a single trial. The text for each vignette has been declared separately and then put inside a list that is set as the value of pages parameter.*/
   quasi_and_artificial_text_1 = `
