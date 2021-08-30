@@ -1,0 +1,25 @@
+/* The following simply extends the class .jspsych-btn from jspsych.css by making the container and the margins larger */
+
+.jspsych-btn-new {
+  display: inline-block;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 30px;
+  height: 100px;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  cursor: pointer;
+  border-radius: 4px;
+  line-height: 1.4;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  background-image: none;
+  border: 1px solid black;
+}
+
+.jspsych-btn-new:hover {
+  background-color: #ddd;
+  border-color: #aaa;
+}
