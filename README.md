@@ -1,5 +1,5 @@
 # false-memories
-This is a script for an online experiment based on (Dranseika, 2020) prepared as a final assignment for the course "Theory and practice in digital experiments: Doing X-Phi online" held at Ludwig-Maximilians-Universität München (SS2021). The experiment is based on jsPsych, a JavaScript library for running behavioral experiments in a web browser The application running (de Leeuw, 2015) the script for the experiment has been deployed using Heroku and can be accessed at https://false-memories.herokuapp.com/. 
+This is a script for an online experiment based on (Dranseika, 2020) prepared as a final assignment for the course "Theory and practice in digital experiments: Doing X-Phi online" held at Ludwig-Maximilians-Universität München (SS2021). The experiment is based on jsPsych, a JavaScript library for running behavioral experiments in a web browser (de Leeuw, 2015). The application running the script for the experiment has been deployed using Heroku and can be accessed at https://false-memories.herokuapp.com/. 
 
 ## Contents
 1. The experiment script (`public/views/index.html`) that contains: 
