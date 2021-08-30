@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>False memories and quasi-memories are memories</title>
+    <!-- Load the base jspsych script and the jspsych-based plugins -->
     <script src="../../jspsych/jspsych.js"></script>
     <script src="../../jspsych/plugins/jspsych-instructions.js"></script>
     <script src="../../jspsych/plugins/jspsych-html-button-response.js"></script>
@@ -40,10 +41,55 @@
   <body>
   </body>
   <script>
+  /* Initialize the variables that are not trial-specific. Putting all the global variables in front irrespective of the trial they are used for would have hurted the readability of the code. Thus, trial specific variables are initialized before the code block for each study. */
   var my_timeline = [];
   var count = 0;
   var proportion_complete;
 
+ /* Welcome page. Refers to the paper on which the experiment is based. Also the point system is introduced. */
+  var welcome = {
+    type: 'instructions',
+    pages: [
+      'Welcome to the experiment, based on 2020 paper by V.Dranseika named "False memories and quasi-memories are memories."',
+      'We are going to give you some scenarios to read, and ask your opinions on them. Points will be rewarded for the completion of each of the scenario that will be presented to you. Complete all scenarios to collect the maximum number of points.',
+    ],
+    show_clickable_nav: true,
+    on_finish: function(){
+        jsPsych.setProgressBar(0.00);
+    }
+  };
+
+/* The following is responsible for "signposting" so that the participant is not taken to the trial immediately after answering the question. This particular trial is run before the first conditional block is evaluated. */
+var pre_then = {
+  type: 'instructions',
+  pages: ['In that case, please consider the following scenario.'],
+  show_clickable_nav: true,
+}
+
+/* Study 1: Quasi-memories and artificial memories */
+/* Part 1: Declaring global variables for the options and scales used in the study. */
+
+  var scale_1 = [
+    'Strongly Disagree',
+    'Disagree',
+    'Neutral',
+    'Agree',
+    'Strongly Agree',
+  ];
+
+  var options_agree = ['A', 'B'];
+
+  function numberRange(start, end) {
+    return new Array(end - start).fill().map((d, i) => i + start);
+  }
+
+  function capitalize(str) {
+    return str[0].toUpperCase() + str.substring(1);
+  }
+
+  var scale_2 = numberRange(1, 8);
+
+/* Part 2: The scenario-specific placeholders to plug in to the vignette template are initialized */
   var quasi = {
     Q1: 'to install human memories',
     Q2: 'other people’s',
@@ -76,42 +122,7 @@
     Q6: 'such original',
   };
 
-  var yes_no_options = ["Yes", "No"];
-  var p1_options = [quasi, artificial, veridical];
-  var p1_shuffled = jsPsych.randomization.shuffle(p1_options);
-
-  var scale_1 = [
-    'Strongly Disagree',
-    'Disagree',
-    'Neutral',
-    'Agree',
-    'Strongly Agree',
-  ];
-
-  var options_agree = ['A', 'B'];
-
-  function numberRange(start, end) {
-    return new Array(end - start).fill().map((d, i) => i + start);
-  }
-
-  function capitalize(str) {
-    return str[0].toUpperCase() + str.substring(1);
-  }
-
-  var scale_2 = numberRange(1, 8);
-
-  var welcome = {
-    type: 'instructions',
-    pages: [
-      'Welcome to the experiment, based on 2020 paper by V.Dranseika named "False memories and quasi-memories are memories."',
-      'We are going to give you some scenarios to read, and ask your opinions on them. Points will be rewarded for the completion of each of the scenario that will be presented to you. Complete all scenarios to collect the maximum number of points.',
-    ],
-    show_clickable_nav: true,
-    on_finish: function(){
-        jsPsych.setProgressBar(0.00);
-    }
-  };
-
+/* This is the trial that preceeds the first conditional block (hence the name 'pre_if_trial'). The conditional blocks runs depending on the answer to the question presented in the trial.*/
   var pre_if_trial = {
     type: 'html-button-response',
     stimulus: '<p>Before we begin, let\'s break the ice. Say, do you enjoy science fiction?</p>',
@@ -122,12 +133,7 @@
     }
   }
 
-  var pre_then = {
-    type: 'instructions',
-    pages: ['In that case, please consider the following scenario.'],
-    show_clickable_nav: true,
-  }
-
+/* Second conditional block. Runs the signposting trial 'pre_then' regardless of how is the conditional evaluated (hence the disjunction in the conditional). */
   var if_node_2 = {
       timeline: [pre_then],
       conditional_function: function(){
@@ -141,7 +147,7 @@
       }
   }
 
-  // STUDY NO 1: PART 1
+  /*Part 3: The vignettes which are to be filled by scenario-specific placeholders are initialized. The vignettes are presented inside a single trial. The text for each vignette has been declared separately and then put inside a list that is set as the value of pages parameter.*/
   quasi_and_artificial_text_1 = `
       <p>
         Imagine that it is now the year 2086 and scientists have invented a
@@ -158,7 +164,6 @@
       </p>
       `;
 
-  // STUDY NO 1: PART 2
   quasi_and_artificial_text_2 = `
       <p>
         Imagine that Albertas is a teenager who had a lot of ${p1_shuffled[0]['Q4']}
@@ -178,7 +183,10 @@
     show_clickable_nav: true,
   };
 
-  // timeline variable
+  /* Part 4: Timeline variable for the claims regarding remembering/knowing is inicialized. The procedure consist in a single trial
+  with set parameters such as type of the survey and labels that is being repeated twice with each of the prompts that are declared at the beginning.
+  Here the progress bar gets updated for the first time in the survey if the participant responded with "Yes" to "Like science fiction question?".
+  */
   prompts = [
     'Do you agree that Albertas <b>remembers</b> that he has tasted rowan-berries when he was a child?',
     'Do you agree that Albertas <b>knows</b> that he has tasted rowan-berries when he was a child?',
@@ -201,6 +209,10 @@
         proportion_complete = jsPsych.getProgressBarCompleted();
   }};
 
+  /*The following trial is as much an instance of signposting as much it is a part of the point system.
+  This particular trial is only run as part of the series of trials that are run when participant responds with "Yes"
+ to the SF question. It informs the participant of the number of points collected at that point.  */
+
   var milestone_2 = {
     type: 'instructions',
     pages: function(){
@@ -208,11 +220,12 @@
     show_clickable_nav: true
   };
 
+/* Second conditional block. Depending on the answer the question regarding preference toward science fiction, the series of science-fiction based trials are run that have been previously initialized.
+  If the participant responds with "No", she is takan to the second study directly.
+*/
   var if_node = {
       timeline: [if_node_2, quasi_and_artificial, quasi_and_artificial_questions, milestone_2],
       conditional_function: function(){
-          // get the data from the previous trial,
-          // and check which key was pressed
           if(scifi_response === "Yes"){
               return true;
           } else {
@@ -221,26 +234,8 @@
       }
   }
 
-  var pre_then = {
-    type: 'instructions',
-    pages: ['In that case, please consider the following scenario.'],
-    show_clickable_nav: true,
-  }
-
-  var if_node_2 = {
-      timeline: [pre_then],
-      conditional_function: function(){
-          // get the data from the previous trial,
-          // and check which key was pressed
-          if(scifi_response === "No"){
-              return true;
-          } else {
-              return false;
-          }
-      }
-  }
-
-  // STUDY 2
+  /* Study 2: Dream memories */
+  /* Part 1: Declaring global variables placeholders to be used to plug in the vignette template. These are shuffled and go through a conditional block which adds "ago" where needed so the resulting vignettes make sense gramatically. */
   var half_year = 'six months';
   var ten_years = 'ten years';
   var yesterday = 'yesterday';
@@ -255,6 +250,7 @@
     p2_scenarios_shuffled[0] += ' ago';
   }
 
+  /*Part 2: The vignettes which are to be filled by scenario-specific placeholders are initialized. Just like in the first study, vignettes sit inside a single trial while the text for each vignette is declared separately and is then placed inside a list that is set as the value of pages parameter.*/
   dream_memories_text_1 = `
       <p>
         ${capitalize(p2_scenarios_shuffled[0])} Ona was attending Algis’ twentieth
@@ -289,6 +285,7 @@
     show_clickable_nav: true,
   };
 
+/*Part 3. Likert scale is used to have the participant is asked to express his agreement with the given claim that is based on the vignettes presented in the previous trial.*/
   var dm_prompt = `How much do you agree with the claim "Ona has a memory of Jonas having wine spilled all over him during a party"`;
 
   var dream_memories_q1 = {
@@ -299,6 +296,7 @@
     }
   };
 
+/*Part 4. The following returns point system-related messages conditional on the answer the participant gave to the SF question. If the participant said "Yes" (which means that he had gone through the science-fiction based scenario, the points for the current study are added to the points he was awarded for finishing the science fiction scenario. If the participant said "No", she is rewarded with a number of points that is equivalent to the number of points she would have been awarded if she had proceeded with science fiction scenario. )*/
   var milestone_1 = {
     type: 'instructions',
     pages: function(){
@@ -311,14 +309,8 @@
       show_clickable_nav: true
   };
 
-  var descriptions = [
-    `Even though Albertas hadn’t tasted rowan-berries when he was a child, he has a
-      memory of tasting rowan-berries`,
-    `Albertas does not have a memory of tasting rowan-berries. He simply has an
-  experience like the experience of someone who has such memory`,
-  ];
 
-  // STUDY 3
+  // Study 3: The following trials implement the idea to allow the participant to indicate his agreement with one of the given claims. That is meant to supplement the judgmenet the participant delivered on first and second studies. Given the length, the claims are again declared separately to be lated used inside a list.
   options_qa = [
     `Even though Albertas hadn’t tasted rowan-berries when he was a child, he has a
                        memory of tasting rowan-berries`,
@@ -334,6 +326,8 @@
                         memory of such event.`,
   ];
 
+
+// timeline variable
   var elaborate_on_qa = {
     type: 'html-button-response',
     stimulus:
@@ -351,6 +345,9 @@
     button_html: '<button class="jspsych-btn-new">%choice%</button>',
   };
 
+  /* Study 4: Memories, money and gunes*/
+  /* Part 1: Declare the global variables which in these case are the prompts (shuffled) to be used in the timeline variable*/
+
   var fakes_options = [
     [
       'A false memory is still a memory.',
@@ -365,16 +362,9 @@
   ];
   var fakes_options_shuffled = jsPsych.randomization.shuffle(fakes_options);
 
-  // STUDY 4
-  var fakes = {
-    type: 'survey-likert',
-    questions: [
-      { prompt: fakes_options_shuffled[0][0], labels: scale_2 },
-      { prompt: fakes_options_shuffled[0][1], labels: scale_2 },
-      { prompt: fakes_options_shuffled[0][2], labels: scale_2 },
-    ],
-    randomize_question_order: true,
-  };
+  /* Declare timeline variable for the study. The procedure consists in a single trial with with set parameters such as type of the survey and labels that is being repeated thrice with each of the prompts. The list of prompts selected using index 0 depends on the result on shuffling.
+  In addition, the progress bar is set to full.
+  */
 
   var falsities = {
     timeline: [
@@ -394,7 +384,7 @@
         proportion_complete = jsPsych.getProgressBarCompleted();
   }};
 
-
+/* Final trial of the experiment which is meant to thank the participant and inform her about the number of points she collected.*/
   var conclude_survey = {
     type: 'instructions',
     pages: function(){
@@ -411,10 +401,13 @@
   // my_timeline.push(elaborate_on_dm);
   // my_timeline.push(fakes);
 
+
   jsPsych.init({
     timeline: [welcome, pre_if_trial, if_node, if_node_2, dream_memories, dream_memories_q1, elaborate_on_dm, milestone_1, falsities, conclude_survey],
     show_progress_bar: true,
+    // The progress is set manually so that so the participant is not awareded points on each trial.
     auto_update_progress_bar: false,
+    // The progress bar is renamed to give an impression that is tracks the number of points the participant collected so far.
     message_progress_bar: 'Points earned',
     on_interaction_data_update: function(data) {
     console.log(JSON.stringify(data))
